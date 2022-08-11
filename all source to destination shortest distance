@@ -1,3 +1,5 @@
+#slow h
+\\
 void bfs(vector<vector<pair<int, int>>> &g)
 {
 
@@ -23,3 +25,42 @@ void bfs(vector<vector<pair<int, int>>> &g)
     }
  
 }
+//
+#fast using toposort
+\\
+void dfs(int node, vector<vector<pair<int, int>>> &g, stack<int>&st, vector<int> &vis)
+{
+    vis[node] = 1;
+
+    for (auto &x : g[node])
+    {
+        if (!vis[x.ff])
+        {
+            dfs(x.ff, g, st, vis);
+        }
+    }
+    st.push(node);
+}
+
+void path(int src, vector<int> &dist, vector<vector<pair<int, int>>> &g, stack<int> &st)
+{
+
+    dist[src] = 0;
+    while (!st.empty())
+    {
+
+        int node = st.top();
+        st.pop();
+    //    if(dist[node]!=INT_MAX)
+        for (auto &x : g[node])
+        {
+            if (dist[node] + x.ss < dist[x.ff])
+            {
+                dist[x.ff]=dist[node]+x.ss;
+
+            }
+        }
+    }
+  
+}
+//
